@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1588276901 source:c:\users\dgaze\desktop\domes\coronavirus_app\main.cpp
+	<iostream>
+	<cmath>
+	<ctime>
+
