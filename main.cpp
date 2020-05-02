@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
+#include "Movement.h"
 
 using namespace std;
-void random_time_duration();
 
 int main()
 {
@@ -66,7 +66,4 @@ int main()
 
 }
 
-void random_time_duration(){
-    int secs = (rand() % 60);
-    int mins = (rand() % 60);
-}
+
