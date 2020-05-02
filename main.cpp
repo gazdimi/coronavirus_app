@@ -3,11 +3,37 @@
 #include <ctime>
 
 using namespace std;
+void random_time_duration();
 
 int main()
-{   //r=2, private_grid = 4x4 = 16
+{
+    bool flag = false;
+    while(!flag){
+        char option;
+        cout << "Coronavirus app - Main menu\nSelect an option from below:\n1. Start GPS tracking\n2. Find most crowded places\n3. Exit" << endl;
+        cout << "Enter option's number: ";
+        cin >> option;
+        switch(option){
+        case '1':
+            flag = true;
+            cout << option;
+            break;
+        case '2':
+            flag = true;
+            cout << option;
+            break;
+        case '3':
+            flag = true;
+            cout << option;
+            break;
+        default:
+            cout << "Invalid input, try again.\n\n";
+            break;
+        }
+    }
+    //r=2, private_grid = 4x4 = 16
     try{
-        cout << "Select number of people from 5 to 50:" << endl;
+        cout << "\nSelect number of people from 5 to 50:" << endl;
         int people;
         cin >> people;
 
@@ -36,8 +62,11 @@ int main()
                 }
             }
         }
-    } catch(...){
+    } catch(...){  cout << "Error";}
 
-    }
+}
 
+void random_time_duration(){
+    int secs = (rand() % 60);
+    int mins = (rand() % 60);
 }
