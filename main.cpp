@@ -55,13 +55,16 @@ int main()
             int y = (rand() % side);
             if(surface[x][y]!=1) { surface[x][y] = 1;}
         }
-        for (int hour=0; hour<24; hour++){      //day
+        /*for (int hour=0; hour<24; hour++){      //day
             for (int min=0; min<60; min++){     //hour
                 for (int sec=0; sec<60; sec++){ //minute
                     cout << "time " << hour <<":"<<min<<":"<<sec << endl;
                 }
             }
-        }
+        }*/
+        Movement obj;
+        obj.random_time_duration();
+        obj.destination(2,3,25);
     } catch(...){  cout << "Error";}
 
 }

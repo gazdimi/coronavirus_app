@@ -8,6 +8,7 @@ class Movement
         Movement();
         virtual ~Movement();
         void random_time_duration();
+        int destination(int x,int y,int side);
     protected:
 
     private:
