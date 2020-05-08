@@ -34,6 +34,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="List.cpp" />
+		<Unit filename="List.h" />
 		<Unit filename="Movement.cpp" />
 		<Unit filename="Movement.h" />
 		<Unit filename="main.cpp" />

@@ -2,9 +2,10 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
-//#include <stdio.h> #include <stdlib.h>
+#include <stdio.h> #include <stdlib.h>
 
 using namespace std;
+
 
 Movement::Movement()
 {
@@ -23,67 +24,33 @@ void Movement::random_time_duration(){
     cout << "Movement " << mins << ":" << secs << endl;
 }
 
-int Movement::destination(int x,int y,int side){
-
-    srand(time(0));
-    int r = (rand() % side) ;
-    int c= (rand() % side) ;
-
-    int t[4]= {3,4,5,6}; //speed
-
-    int distance_x=abs(x-r);
-    int distance_y=abs(y-c);  //absolute value
-
-    int f_d= distance_x + distance_y;
-    int speed,rem;
-    for(int i=0; i<4; i++){
-
-            if(f_d % t[i]==0){
-                speed=t[i];
-                rem=0;
-                }else if (f_d % t[i]==1){
-                    speed=t[i];
-                    rem=1;}
-                else if (f_d % t[i]==2){
-                        speed=t[i];
-                        rem=2;
-                }
-            }
-    cout << "Speed is: " << speed << endl << "Remaining blocks: " << rem << endl;
-
-/* int surface[side][side];
-
-    if(x<r && y<c){
-
-     for(i=x; i<r; i++){
-        surface[i][y]=1;
-     }
-        for(j=y; j<c; j++){
-        surface[r][j]=1;
-     }
+int Movement::destination(int *x, int *y, int side){
+    int t = rand() % 4;         //random direction, 4 directions
+    int s[4]= {3,4,5,6};        //speed limits
+    int speed = s[rand() % 4];  //get random number from 0 to 3 and access above table to get random speed
+    switch(t){
+        case 0 :                //right
+            *x = *x + speed;
+            if (*x > side){*x = side;}
+            else if(*x < 1){*x = 1;}
+            break;
+        case 1:                 //left
+            *x = *x - speed;
+            if (*x > side){*x = side;}
+            else if(*x < 1){*x = 1 ;}
+            break;
+        case 2:                 //up
+            *y = *y + speed;
+            if(*y > side){*y = side;}
+            else if(*y < 1){*y = 1;}
+            break;
+        case 3:                 //down
+            *y = *y - speed;
+            if(*y > side){*y = side;}
+            else if (*y < 1){*y=1;}
+            break;
     }
-     else if(x<r && y>c){
-            for(i=x; i<r; i++){
-        surface[i][y]=1;
-     }
-        for(j=y;j>c; j--){
-            surface[r][j]=1;
-        }
-     }
-     else if(x>r && y<c){
-        for(i=x; i>r; i--){
-            surface[i][y]=1;
-        }
-        for(i=y;i<c;i++){
-            surface[r][i]=1;
-            }
-     }else{
-     for(i=x; i>r; i--){
-            surface[i][y]=1;
-        }
-        for(i=y;i>c; i--){
-            surface[r][i]=1;
-        }
-
-     } */
 }
+
+
+

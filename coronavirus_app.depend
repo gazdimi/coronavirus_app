@@ -7,3 +7,49 @@
 
 1588418612 c:\users\dgaze\desktop\domes\coronavirus_app\movement.h
 
+1588885212 source:c:\users\anna\desktop\coronavirus_app\movement.cpp
+	"Movement.h"
+	<iostream>
+	<cmath>
+	<ctime>
+	<stdio.h>
+
+1588885038 c:\users\anna\desktop\coronavirus_app\movement.h
+
+1588885732 source:c:\users\anna\desktop\coronavirus_app\main.cpp
+	<iostream>
+	<cmath>
+	<ctime>
+	<stdlib.h>
+	"Movement.h"
+	"List.h"
+
+1588886986 source:c:\users\anna\desktop\coronavirus_app\list.cpp
+	"List.h"
+	<iostream>
+
+1588886958 c:\users\anna\desktop\coronavirus_app\list.h
+
+1588886986 source:c:\users\dgaze\downloads\coronavirus_app\list.cpp
+	"List.h"
+	<iostream>
+
+1588886958 c:\users\dgaze\downloads\coronavirus_app\list.h
+
+1588964671 source:c:\users\dgaze\downloads\coronavirus_app\movement.cpp
+	"Movement.h"
+	<iostream>
+	<cmath>
+	<ctime>
+	<stdio.h>
+
+1588964620 c:\users\dgaze\downloads\coronavirus_app\movement.h
+
+1588972511 source:c:\users\dgaze\downloads\coronavirus_app\main.cpp
+	<iostream>
+	<cmath>
+	<ctime>
+	<stdlib.h>
+	"Movement.h"
+	"List.h"
+
