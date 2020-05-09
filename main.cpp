@@ -76,31 +76,19 @@ int main()  //r=2, private_grid = 4x4 = 16
                     surface[i][j] = 0;
                 }
             }
-            cout << "Sicks: " << sick << endl;
-            Movement m_sicks[sick];
-            List sicks[sick];
+            Movement m_infected[sick];
+            List infected[sick];
             for(int i=0; i<sick; i++){
-                gps(&m_sicks[i], &sicks[i], side);
+                gps(&m_infected[i], &infected[i], side);
             }
-            /*sicks[0].Output();
-            cout << endl;
-            cout << &sicks[0] << endl;
-            sicks[1].Output();
-            cout  << endl;
-            cout << &sicks[1] << endl;*/
+            //infected[0].Output();
 
-            cout << "Healthy: " << people - sick << endl;
             Movement m_healthy[people - sick];
             List healthy[people - sick];
             for(int i=0; i<people - sick; i++){
                 gps(&m_healthy[i], &healthy[i], side);
             }
-            /*healthy[0].Output();
-            cout << endl;
-            cout << &healthy[0] << endl;
-            healthy[1].Output();
-            cout  << endl;
-            cout << &healthy[1] << endl;*/
+            //healthy[0].Output();
 
         } catch(...){  cout << "Error";}
     }
