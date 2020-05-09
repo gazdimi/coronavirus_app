@@ -9,7 +9,6 @@ using namespace std;
 
 
 void gps(Movement *m, List *l, int side){
-    srand(time(0));
     int x = (rand() % side);                                //initialize the people in random locations inside the surface
     int y = (rand() % side);
     for (int hour=0; hour<1; hour++){                       //day
@@ -77,7 +76,7 @@ int main()  //r=2, private_grid = 4x4 = 16
                     surface[i][j] = 0;
                 }
             }
-            cout << "Sicks: " << sick << endl;
+            /*cout << "Sicks: " << sick << endl;
             for(int i=1; i<=sick; i++){
                 List s_i;
                 Movement ms_i;
@@ -85,8 +84,18 @@ int main()  //r=2, private_grid = 4x4 = 16
                 cout<< "Infected person: " << i+1<< endl;
                 s_i.Output();
                 cout<< endl;
-                cout << &s_i << endl;
-            }
+            }*/
+            Movement a;
+            List b;
+            gps(&a,&b,side);
+            cout << "Outside gps b:" << &b << endl;
+            b.Output();
+            cout << endl;
+            Movement c;
+            List d;
+            gps(&c,&d,side);
+            cout << "Outside gps d:" << &d << endl;
+            d.Output();
 
         } catch(...){  cout << "Error";}
     }
