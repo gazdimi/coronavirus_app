@@ -8,19 +8,21 @@
 using namespace std;
 
 
-void gps(Movement *m, List *l, int side){
-    int x = (rand() % side);                                //initialize the people in random locations inside the surface
+void gps(Movement *m, List *l, int side, int days){
+    int x = (rand() % side);                            //initialize the people in random locations inside the surface
     int y = (rand() % side);
-    for (int hour=0; hour<1; hour++){                       //day
-        for (int min=0; min<10; min++){                      //hour
-            int counter = 0;
-            for (int sec=0; sec<60; sec++){                 //minute
-                m -> destination(&x, &y, side);
-                if(counter == 30){
-                    l -> Insert(x,y,hour,min,sec);
-                    counter = 0;
+    for (int d=0; d<days*24; d+=24){
+        for (int hour=0; hour<1; hour++){               //day
+            for (int min=0; min<10; min++){             //hour
+                int counter = 0;
+                for (int sec=0; sec<60; sec++){         //minute
+                    m -> destination(&x, &y, side);
+                    if(counter == 30){
+                        l -> Insert(x,y,hour,min,sec);
+                        counter = 0;
+                    }
+                    counter++;
                 }
-                counter++;
             }
         }
     }
@@ -66,16 +68,20 @@ int main()  //r=2, private_grid = 4x4 = 16
                 cin.ignore(1000, '\n');                                 //ignore last 1000 input characters until new line
                 cout << "Invalid input, try again.\n" << endl;
             }
+
+            cout << "\nSelect number of days from 1 to 5:" << endl;
+            int days;
+            while (!(cin >> days && days >= 1 && days <= 5)) {          //check input, while it's invalid
+                cin.clear();                                            //clear input buffer from user's input
+                cin.ignore(1000, '\n');                                 //ignore last 1000 input characters until new line
+                cout << "Invalid input, try again.\n" << endl;
+            }
+
             srand(time(0));                                             //pseudo-random number generator using time as an unpredictable seed
             int sick = (rand() % people) + 1;                           //random number of infected from 1 to people
             int grid =  people * 16;                                    //personal grid will be 4x4 = 16 blocks totally, for checking radius = 2
             int side = round(sqrt(grid));                               //side of the grid
-            int surface[side][side];
-            for (int i=0; i<side; i++){
-                for (int j=0; j<side; j++){                             //initialize the surface with zeros
-                    surface[i][j] = 0;
-                }
-            }
+
             Movement m_infected[sick];
             List infected[sick];
             for(int i=0; i<sick; i++){

@@ -2,16 +2,20 @@
 #include <iostream>
 using namespace std;
 
-List::List()                                    //constructor
+List::List(int d)                               //constructor
 {
     head = NULL;
     tail = NULL;
-    temp_day = NULL;
+    days = d;
+    day_to = new Node*[days];
+    for (int i=0; i<days; i++){
+       day_to[i] = NULL;
+    }
 }
 
 List::~List()                                   //destructor
 {
-    delete head, tail, temp_day;                //release memory resources
+    delete head, tail, day_to, days;            //release memory resources
 }
 
 void List::Insert(int x, int y, int h, int m, int s){
@@ -24,21 +28,21 @@ void List::Insert(int x, int y, int h, int m, int s){
     temp -> m = m;
     temp -> s = s;
     temp -> next = NULL;
-    temp -> day_to = NULL;
     if (head==NULL){                            //case of empty list
         head = temp;                            //head equals tail
         tail = temp;
         temp = NULL;                            //prepare temp for next node (when it will be given)
-        temp_day = head;
-        //cout << "1st: " << temp_day << endl;
+        day_to[0] = head;
     }else{                                      //case of one or more existing list nodes, previous tail will point to current node (temp)
         tail -> next = temp;                    //meaning pass current memory address of temp to the next pointer of tail node
         tail = temp;                            //assign tail to temp (last node), tail always points to last node
-        if ((86399 - total_secs <= 0) || (total_secs - previous_secs < 0)){
-            temp -> day_to = temp_day;
-            temp_day = NULL;
-            temp_day = temp;
-            //cout << "2nd: " << temp_day << endl;
+        if (total_secs - previous_secs < 0){
+            for (int i=1; i<days; i++){
+                if(day_to[i]==NULL){
+                    day_to[i] = temp;
+                    break;
+                }
+            }
         }
     }
     previous_secs = total_secs;
@@ -52,5 +56,19 @@ void List::Output(){
         cout << temp -> x << "," << temp -> y << " " << temp -> h << ":" << temp -> m << ":" << temp -> s << " | ";
         temp = temp -> next;
     }
+    cout << endl;
+
+    /*cout << "List elements by day: " << endl;
+    Node *cemp = new Node;
+    for (int i=0; i<days; i++){
+        cout << "Day " << i + 1 << endl;
+        cemp = day_to[i];
+        temp = cemp;
+        while(temp != day_to[i+1]){
+            cout << temp -> x << "," << temp -> y << " " << temp -> h << ":" << temp -> m << ":" << temp -> s << " | ";
+            temp = temp -> next;
+        }
+        cout << endl;
+    }*/
 }
 
