@@ -7,18 +7,38 @@
 
 using namespace std;
 
-
 void gps(Movement *m, List *l, int side, int days){
     int x = (rand() % side);                            //initialize the people in random locations inside the surface
     int y = (rand() % side);
-    for (int d=0; d<days*24; d+=24){
-        for (int hour=0; hour<1; hour++){               //day
-            for (int min=0; min<10; min++){             //hour
+    for (int d=0; d<days; d++){
+        for (int hour=0; hour<24; hour++){              //day
+            for (int minu=0; minu<60; minu++){          //hour
                 int counter = 0;
                 for (int sec=0; sec<60; sec++){         //minute
+                    int stop_gps = rand() % 2;
+                    int delay = (rand() % 60);
                     m -> destination(&x, &y, side);
                     if(counter == 30){
-                        l -> Insert(x,y,hour,min,sec);
+                        if(stop_gps==1){
+                            l -> Insert(x,y,hour,minu,sec);
+                        }else{
+                            int tot = sec + delay;
+                            sec += delay;
+                            if (sec>=60){
+                                sec = tot - 60;
+                                minu++;
+                                if(minu>59){
+                                    hour++;
+                                    minu--;
+                                }
+                                if(hour>23){
+                                    d++;
+                                    hour--;
+                                }
+                            }
+                            counter = sec;
+                            if(d>=days){break;}
+                        }
                         counter = 0;
                     }
                     counter++;
@@ -33,18 +53,14 @@ bool menu(){
     while(!flag){
         char option;
         cout << "Coronavirus app - Main menu\nSelect an option from below:\n1. Start GPS tracking";
-        cout << "\n2. Find most crowded places\n3. Exit\nEnter option's number: ";
+        cout << "\n2. Exit\nEnter option's number: ";
         cin >> option;
         switch(option){
         case '1':                       //start simulation of movement (GPS tracking)
             flag = true;
             return flag;
             break;
-        case '2':                       //show to administrator info about most crowded places
-            flag = true;
-            cout << option;
-            break;
-        case '3':                               //exit option
+        case '2':                       //exit option
             flag = true;
             cout << "Bye!!";
             exit(0);                            //terminate program
@@ -54,6 +70,19 @@ bool menu(){
             break;
         }
     }
+}
+
+int List::days;
+int input_days() {
+
+    cout << "\nSelect number of days from 1 to 5:" << endl;
+    //int d;
+    while (!(cin >> List::days && List::days >= 1 && List::days <= 5)) {          //check input, while it's invalid
+            cin.clear();                                            //clear input buffer from user's input
+            cin.ignore(1000, '\n');                                 //ignore last 1000 input characters until new line
+            cout << "Invalid input, try again.\n" << endl;
+    }
+    return List::days;
 }
 
 int main()  //r=2, private_grid = 4x4 = 16
@@ -69,13 +98,7 @@ int main()  //r=2, private_grid = 4x4 = 16
                 cout << "Invalid input, try again.\n" << endl;
             }
 
-            cout << "\nSelect number of days from 1 to 5:" << endl;
-            int days;
-            while (!(cin >> days && days >= 1 && days <= 5)) {          //check input, while it's invalid
-                cin.clear();                                            //clear input buffer from user's input
-                cin.ignore(1000, '\n');                                 //ignore last 1000 input characters until new line
-                cout << "Invalid input, try again.\n" << endl;
-            }
+            int days = input_days();
 
             srand(time(0));                                             //pseudo-random number generator using time as an unpredictable seed
             int sick = (rand() % people) + 1;                           //random number of infected from 1 to people
@@ -85,16 +108,23 @@ int main()  //r=2, private_grid = 4x4 = 16
             Movement m_infected[sick];
             List infected[sick];
             for(int i=0; i<sick; i++){
-                gps(&m_infected[i], &infected[i], side);
+                gps(&m_infected[i], &infected[i], side, days);
             }
             //infected[0].Output();
+
+            for(int i=0; i<1; i++){ //sick, only 1 person gia eukolia twra
+                for(int j=0; j<days; j++){
+                    infected[i].Repair(j);
+                }
+            }
 
             Movement m_healthy[people - sick];
             List healthy[people - sick];
             for(int i=0; i<people - sick; i++){
-                gps(&m_healthy[i], &healthy[i], side);
+                gps(&m_healthy[i], &healthy[i], side, days);
             }
-            //healthy[0].Output();
+            //healthhealthy[0].Output();
+
 
         } catch(...){  cout << "Error";}
     }

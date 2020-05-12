@@ -2,14 +2,13 @@
 #include <iostream>
 using namespace std;
 
-List::List(int d)                               //constructor
+List::List()                               //constructor int d
 {
     head = NULL;
     tail = NULL;
-    days = d;
     day_to = new Node*[days];
     for (int i=0; i<days; i++){
-       day_to[i] = NULL;
+        day_to[i] = NULL;
     }
 }
 
@@ -69,6 +68,49 @@ void List::Output(){
             temp = temp -> next;
         }
         cout << endl;
+    }*/
+}
+
+void List::Repair(int day){
+    Node *curr = new Node;                  //current node
+    Node *previous = new Node;              //previous node
+    Node *next_day = new Node;              //node's memory address of next day
+
+    curr = day_to[day];
+    previous = curr;
+    //next_day = day_to[day+1];
+    int prev_secs, curr_secs;
+
+    if (days == 1){                         //only one available day
+        while (curr != NULL){
+            prev_secs = ((previous -> h * 60 ) + previous -> m) * 60 + previous -> s;
+            curr_secs = ((curr -> h * 60 ) + curr -> m) * 60 + curr -> s;
+            if (curr_secs - prev_secs > 30){
+                int rep_x = (rand() % curr -> x) + previous -> x;
+                int rep_y = (rand() % curr -> y) + previous -> y;
+                //int rep_h = (rand() % curr -> h) + previous -> h; //error giati exoume 0 kai 0
+                //int rep_m = (rand() % curr -> m) + previous -> m;
+                //int rep_s = (rand() % curr -> s) + previous -> s;
+                cout << "previous: " << previous -> x << "," << previous -> y << " " << previous -> h << ":" << previous -> m << ":" << previous -> s << " ";
+                //cout << "repaired: " << rep_x << "," << rep_y << " " << rep_h << ":" << rep_m << ":" << rep_s << endl;
+                cout << "current: " << curr -> x << "," << curr -> y << " " << curr -> h << ":" << curr -> m << ":" << curr -> s << endl;
+                //break;
+            }
+        previous = curr;
+        curr = curr -> next;
+        }
+    }
+    /*while(temp != NULL && temp != next_day){
+        int prev_secs = ((previous -> h * 60 ) + previous -> m) * 60 + previous -> s;
+        int curr_secs = ((temp -> h * 60 ) + temp -> m) * 60 + temp -> s;
+        //cout << "previous" << previous -> h << ":" << previous -> m << ":" << previous -> s << "    ";
+        //cout << "current" << temp -> h << ":" << temp -> m << ":" << temp -> s << endl;
+        if (curr_secs - prev_secs > 30){
+            cout << "hi" << endl;
+        }
+        previous = temp;
+        temp = temp -> next;
+
     }*/
 }
 

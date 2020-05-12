@@ -9,14 +9,16 @@ struct Node{
 class List
 {
     public:
-        List(int d);
+        List();
         ~List();
         Node *head;     //stores the memory address of the first node
         Node *tail;     //stores the memory address of the last node
         Node** day_to;  //pointer of type node, that will store memory address of node representing the beginning of the day
-        int days;
+        static int days;
+        friend int input_days();
         void Insert(int x, int y, int h, int m, int s);
         void Output();
+        void Repair(int day);
     protected:
 
     private:
