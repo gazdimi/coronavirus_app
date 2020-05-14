@@ -1,5 +1,9 @@
 #include "List.h"
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <random>
+
 using namespace std;
 
 List::List()                               //constructor int d
@@ -71,46 +75,59 @@ void List::Output(){
     }*/
 }
 
+int List::getRandom(int prev, int curr){
+    int number;
+    random_device myRandom;
+    unsigned seed = myRandom();
+    default_random_engine myRandomEngine(seed);
+    if (prev > curr){
+        uniform_int_distribution<int>  myDist(curr, prev);
+        number = myDist(myRandomEngine);
+    }else if(prev < curr){
+        uniform_int_distribution<int>  myDist(prev, curr);
+        number = myDist(myRandomEngine);
+    }else{
+        number = prev;
+    }
+    return number;
+}
+
 void List::Repair(int day){
     Node *curr = new Node;                  //current node
     Node *previous = new Node;              //previous node
-    Node *next_day = new Node;              //node's memory address of next day
+    Node *repaired = new Node;
+    //Node *next_day = new Node;              //node's memory address of next day
 
     curr = day_to[day];
     previous = curr;
     //next_day = day_to[day+1];
-    int prev_secs, curr_secs;
+    int rep_x, rep_y, rep_time, prev_secs, curr_secs;
 
     if (days == 1){                         //only one available day
         while (curr != NULL){
             prev_secs = ((previous -> h * 60 ) + previous -> m) * 60 + previous -> s;
             curr_secs = ((curr -> h * 60 ) + curr -> m) * 60 + curr -> s;
             if (curr_secs - prev_secs > 30){
-                int rep_x = (rand() % curr -> x) + previous -> x;
-                int rep_y = (rand() % curr -> y) + previous -> y;
-                //int rep_h = (rand() % curr -> h) + previous -> h; //error giati exoume 0 kai 0
-                //int rep_m = (rand() % curr -> m) + previous -> m;
-                //int rep_s = (rand() % curr -> s) + previous -> s;
+                rep_x = getRandom(previous->x, curr->x);
+                rep_y = getRandom(previous->y, curr->y);
+                rep_time = getRandom(prev_secs, curr_secs);
+
+                repaired -> x = rep_x;                              //initialize all structure values of repaired node
+                repaired -> y = rep_y;                              //assign Node variables to values
+                repaired -> h = rep_time/3600;
+                repaired -> m = (rep_time%3600)/60;
+                repaired -> s = rep_time%60;
+                previous -> next = repaired;
+                repaired -> next = curr;
+
                 cout << "previous: " << previous -> x << "," << previous -> y << " " << previous -> h << ":" << previous -> m << ":" << previous -> s << " ";
-                //cout << "repaired: " << rep_x << "," << rep_y << " " << rep_h << ":" << rep_m << ":" << rep_s << endl;
+                cout << "repaired: " << repaired -> x << "," << repaired -> y << " " << repaired -> h << ":" << repaired -> m << ":" << repaired -> s << " ";
                 cout << "current: " << curr -> x << "," << curr -> y << " " << curr -> h << ":" << curr -> m << ":" << curr -> s << endl;
-                //break;
+                break;
             }
-        previous = curr;
-        curr = curr -> next;
+            previous = curr;
+            curr = curr -> next;
         }
     }
-    /*while(temp != NULL && temp != next_day){
-        int prev_secs = ((previous -> h * 60 ) + previous -> m) * 60 + previous -> s;
-        int curr_secs = ((temp -> h * 60 ) + temp -> m) * 60 + temp -> s;
-        //cout << "previous" << previous -> h << ":" << previous -> m << ":" << previous -> s << "    ";
-        //cout << "current" << temp -> h << ":" << temp -> m << ":" << temp -> s << endl;
-        if (curr_secs - prev_secs > 30){
-            cout << "hi" << endl;
-        }
-        previous = temp;
-        temp = temp -> next;
-
-    }*/
 }
 

@@ -19,6 +19,7 @@ class List
         void Insert(int x, int y, int h, int m, int s);
         void Output();
         void Repair(int day);
+        int getRandom(int prev, int curr);
     protected:
 
     private:
