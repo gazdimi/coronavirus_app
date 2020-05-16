@@ -112,7 +112,7 @@ int main()  //r=2, private_grid = 4x4 = 16
             }
             //infected[0].Output();
 
-            for(int i=0; i<1; i++){ //sick, only 1 person gia eukolia twra
+            for(int i=0; i<sick; i++){
                 for(int j=0; j<days; j++){
                     infected[i].Repair(j);
                 }
@@ -124,6 +124,12 @@ int main()  //r=2, private_grid = 4x4 = 16
                 gps(&m_healthy[i], &healthy[i], side, days);
             }
             //healthhealthy[0].Output();
+
+            for(int i=0; i<people - sick; i++){
+                for(int j=0; j<days; j++){
+                    healthy[i].Repair(j);
+                }
+            }
 
 
         } catch(...){  cout << "Error";}

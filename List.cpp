@@ -93,41 +93,37 @@ int List::getRandom(int prev, int curr){
 }
 
 void List::Repair(int day){
-    Node *curr = new Node;                  //current node
-    Node *previous = new Node;              //previous node
+    Node *curr = new Node;                                          //current node
+    Node *previous = new Node;                                      //previous node
     Node *repaired = new Node;
-    //Node *next_day = new Node;              //node's memory address of next day
+    Node *next_day = new Node;              //node's memory address of next day
 
     curr = day_to[day];
     previous = curr;
-    //next_day = day_to[day+1];
+    next_day = NULL;
+    if (days!=1 && day!=0 && day+1!=days){ next_day = day_to[day+1]; }
     int rep_x, rep_y, rep_time, prev_secs, curr_secs;
 
-    if (days == 1){                         //only one available day
-        while (curr != NULL){
-            prev_secs = ((previous -> h * 60 ) + previous -> m) * 60 + previous -> s;
-            curr_secs = ((curr -> h * 60 ) + curr -> m) * 60 + curr -> s;
-            if (curr_secs - prev_secs > 30){
-                rep_x = getRandom(previous->x, curr->x);
-                rep_y = getRandom(previous->y, curr->y);
-                rep_time = getRandom(prev_secs, curr_secs);
+    while (curr != NULL){
+        prev_secs = ((previous -> h * 60 ) + previous -> m) * 60 + previous -> s;
+        curr_secs = ((curr -> h * 60 ) + curr -> m) * 60 + curr -> s;
+        if (curr_secs - prev_secs > 30){
+            rep_x = getRandom(previous->x, curr->x);
+            rep_y = getRandom(previous->y, curr->y);
+            rep_time = getRandom(prev_secs, curr_secs);
 
-                repaired -> x = rep_x;                              //initialize all structure values of repaired node
-                repaired -> y = rep_y;                              //assign Node variables to values
-                repaired -> h = rep_time/3600;
-                repaired -> m = (rep_time%3600)/60;
-                repaired -> s = rep_time%60;
-                previous -> next = repaired;
-                repaired -> next = curr;
+            repaired -> x = rep_x;                              //initialize all structure values of repaired node
+            repaired -> y = rep_y;                              //assign Node variables to values
+            repaired -> h = rep_time/3600;
+            repaired -> m = (rep_time%3600)/60;
+            repaired -> s = rep_time%60;
+            previous -> next = repaired;
+            repaired -> next = curr;
 
-                cout << "previous: " << previous -> x << "," << previous -> y << " " << previous -> h << ":" << previous -> m << ":" << previous -> s << " ";
-                cout << "repaired: " << repaired -> x << "," << repaired -> y << " " << repaired -> h << ":" << repaired -> m << ":" << repaired -> s << " ";
-                cout << "current: " << curr -> x << "," << curr -> y << " " << curr -> h << ":" << curr -> m << ":" << curr -> s << endl;
-                break;
-            }
-            previous = curr;
-            curr = curr -> next;
         }
+        previous = curr;
+        curr = curr -> next;
+        if(curr==next_day){break;}
     }
 }
 
